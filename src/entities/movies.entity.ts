@@ -11,10 +11,10 @@ class Movie {
   @Column({ type: "text", nullable: true })
   description?: string | undefined | null;
 
-  @Column({})
+  @Column()
   duration: number;
 
-  @Column({})
+  @Column()
   price: number;
 }
 

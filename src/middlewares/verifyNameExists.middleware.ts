@@ -3,18 +3,22 @@ import { Movie } from "../entities";
 import { movieRepo } from "../repositories";
 import AppError from "../errors/App.error";
 
-export const verifyIdExists = async (
+export const verifyNameExists = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const foundMovie: Movie | null = await movieRepo.findOneBy({
-    id: Number(req.params.id),
+  const { name } = req.body;
+
+  if (!name) {
+    return next();
+  }
+
+  const foundMovie: Movie | null = await movieRepo.findOne({
+    where: { name: name },
   });
 
-  if (!foundMovie) throw new AppError("Movie not found", 404);
-
-  res.locals = { ...res.locals, foundMovie };
+  if (foundMovie) throw new AppError("Movie already exists.", 409);
 
   return next();
 };

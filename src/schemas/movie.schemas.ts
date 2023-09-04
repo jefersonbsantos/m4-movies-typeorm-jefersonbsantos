@@ -5,10 +5,10 @@ const movieSchema = z.object({
   name: z.string().max(50),
   description: z.string().nullish(),
   duration: z.number().positive(),
-  price: z.number().positive(),
+  price: z.number().positive().int(),
 });
 
 const movieCreateSchema = movieSchema.omit({ id: true });
-const movieUpsdateSchema = movieCreateSchema.partial();
+const movieUpdateSchema = movieCreateSchema.partial();
 
-export { movieCreateSchema, movieUpsdateSchema };
+export { movieCreateSchema, movieUpdateSchema };
